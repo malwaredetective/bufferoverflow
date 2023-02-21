@@ -16,7 +16,7 @@ def main():
 	badchars = subparser.add_parser('badchars', description="A Python script used exploit stack-based Buffer Overflow vulnerabilities. This module can be used to identify 'Bad Characters' that should be avoided when generating your shellcode.", help="Submit a string of hexadecimal characters against the application to identify 'Bad Characters'.")
 	exploit = subparser.add_parser('exploit', description="A Python script used exploit stack-based Buffer Overflow vulnerabilities. This module can be used to launch your Buffer Overflow and execute shellcode against a vulnerable application. Warning: Rememeber to manually update the script to modify the EIP and upload your custom shellcode.", help='Exploit a vulnerable application with a stack-based Buffer Overflow to execute shellcode.')
 
-    # Positional arguments for Spiking
+    	# Positional arguments for Spiking
 	spiking.add_argument("-t", "--target", type=str, required=True, help="The IP Address of your target.")
 	spiking.add_argument("-p", "--port", type=int, required=True, help="The port number of the target application.")
 	spiking.add_argument("-d", "--data", type=str, required=True, help="The user input to supply the application before attempting the Buffer Overflow.")
