@@ -69,17 +69,19 @@ def spiking_module(target, port, data):
 		try:
 			s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			s.connect((target, port))
+			s.recv(1024)
 
 			payload = data + buffer
 
 			s.send((payload.encode()))
+			s.recv(1024)
 			s.close()
 			print(f"Spiking {str(len(buffer))} bytes to {target}:{port} {data} (A * {str(len(buffer))} ...")
 			sleep(1)
 			buffer = buffer + "A" * 100
 
 		except Exception as e:
-			print(f"Fuzzing crashed at {str(len(buffer))}! The following exception was triggered: " + e)
+			print(f"Fuzzing crashed at {str(len(buffer))}! The following exception was triggered: " + str(e))
 			sys.exit()
 
 def offset_module(target, port, data, length):
@@ -102,7 +104,7 @@ def offset_module(target, port, data, length):
 		print(f"Use /usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -l {length} -q [EIP] to calculate the offset of the EIP.")
 
 	except Exception as e:
-		print(f"Error connecting to the server at {target}:{port}! The following exception was caught: " + e)
+		print(f"Error connecting to the server at {target}:{port}! The following exception was caught: " + str(e))
 		sys.exit()
 
 def eip_module(target, port, data, offset):
@@ -120,7 +122,7 @@ def eip_module(target, port, data, offset):
 		print(f"Sent {str(len(payload))} bytes to {target}:{port}. If successful, the value of the EIP should be 0x42424242.")
 
 	except Exception as e:
-		print(f"Error connecting to the server at {target}:{port}! The following exception was caught: " + e)
+		print(f"Error connecting to the server at {target}:{port}! The following exception was caught: " + str(e))
 		sys.exit()
 
 def badchars_module(target, port, data, offset):
@@ -156,7 +158,7 @@ def badchars_module(target, port, data, offset):
 		print(f"Sent {str(len(payload))} bytes to {target}:{port}. Analyze the memory dump of the ESP to determine if any characters were unable to be interpretted by the application.")
 
 	except Exception as e:
-		print(f"Error connecting to the server at {target}:{port}! The following exception was caught: " + e)
+		print(f"Error connecting to the server at {target}:{port}! The following exception was caught: " + str(e))
 		sys.exit()
 
 def exploit_module(target, port, data, offset, nop):
@@ -209,7 +211,7 @@ def exploit_module(target, port, data, offset, nop):
 
 	except Exception as e:
 		print(e)
-		print(f"Error connecting to the server at {target}:{port}! The following exception was caught: " + e)
+		print(f"Error connecting to the server at {target}:{port}! The following exception was caught: " + str(e))
 		sys.exit()
 
 if __name__ == "__main__":
